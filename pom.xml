@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>io.pst.mojo</groupId>
+	<artifactId>s3-static-uploader</artifactId>
+	<packaging>pom</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>S3 Static Uploader</name>
+	<url>http://aws.amazon.com</url>
+	<organization>
+		<name>Pentasoft</name>
+		<url>https://github.com/pentasoft/s3-static-uploader</url>
+	</organization>
+	<inceptionYear>2013</inceptionYear>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	    <maven.compiler.source>1.6</maven.compiler.source>
+	    <maven.compiler.target>1.6</maven.compiler.target>
+		
+		<!-- Library versions -->
+		<maven.plugin.tools.api.version>3.2</maven.plugin.tools.api.version>
+		<maven.core.version>3.0.4</maven.core.version>
+		<maven.plugin.api.version>3.0.5</maven.plugin.api.version>
+		
+		<plexus.utils.version>3.0.1</plexus.utils.version>
+		<commons.codec.version>1.6</commons.codec.version>
+		<aws.sdk.version>1.3.13</aws.sdk.version>
+
+		<!-- Plugin versions -->
+		<maven.compiler.plugin.version>2.5.1</maven.compiler.plugin.version>
+		<maven.plugin.plugin.version>3.2</maven.plugin.plugin.version>
+	</properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-plugin-api</artifactId>
+                <version>${maven.plugin.api.version}</version>
+            </dependency>
+			<dependency>
+				<groupId>org.apache.maven.plugin-tools</groupId>
+				<artifactId>maven-plugin-tools-api</artifactId>
+				<version>${maven.plugin.tools.api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.plexus</groupId>
+				<artifactId>plexus-utils</artifactId>
+				<version>${plexus.utils.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>${commons.codec.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk</artifactId>
+				<version>${aws.sdk.version}</version>
+				<scope>required</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<modules>
+	   <module>s3-static-uploader-plugin</module>
+	   <module>s3-static-uploader-example1</module>
+	</modules>
+
+	<build>
+	   <plugins>
+	       <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<scm>
+	   <connection>scm:git:https://github.com/pentasoft/s3-static-uploader.git</connection>
+	   <developerConnection>scm:git:https://github.com/pentasoft/s3-static-uploader.git</developerConnection>
+	   <url>https://github.com/pentasoft/s3-static-uploader</url>
+	</scm>
+
+    <distributionManagement>
+        <repository>
+            <id>nexusmirror</id>
+            <name>Pentasoft Releases Repository</name>
+            <url>http://repository.pentasoft-development.es:8081/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexusmirror</id>
+            <name>Pentasoft Snapshots Repository</name>
+            <url>http://repository.pentasoft-development.es:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+	
+</project>
