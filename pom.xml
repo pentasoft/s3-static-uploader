@@ -3,7 +3,7 @@
 	<groupId>io.pst.mojo</groupId>
 	<artifactId>s3-static-uploader</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>S3 Static Uploader</name>
 	<url>http://aws.amazon.com</url>
 	<organization>
