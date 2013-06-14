@@ -20,23 +20,69 @@
                 <accessKey>${aws.accessKey}</accessKey>
                 <secretKey>${aws.secretKey}</secretKey>
                 <bucketName>${aws.bucketName}</bucketName>
-                <contentEncoding>gzip</contentEncoding>
+                <refreshExpiredObjects>true</refreshExpiredObjects>
                 <includes>
-                    <include>**/*.gif</include>
-                    <include>**/*.jpg</include>
-                    <include>**/*.tif</include>
-                    <include>**/*.png</include>
-                    <include>**/*.pdf</include>
-                    <include>**/*.swf</include>
-                    <include>**/*.eps</include>
-                    <include>**/*.js</include>
-                    <include>**/*.css</include>
-                    <include>**/*.html</include>
-                    <include>**/*</include>
+                    <include>
+	                    <bind>
+	                        <pattern>%regex[([^\s]+(\.(?i)(jpg|png|gif|bmp|tif|pdf|swf|eps))$)]</pattern>
+	                        <metadataId>static</metadataId>
+	                    </bind>
+	                    <constraints>
+	                        <!-- Constraint for specific files -->
+	                        <bind>
+	                            <pattern>**/next*.png</pattern>
+	                            <metadataId>static-longlived</metadataId>
+	                        </bind>
+	                    </constraints>
+                    </include>
+                    <include>
+	                    <bind>
+	                        <pattern>%regex[([^\s]+(\.(?i)(html|css|js))$)]</pattern>
+	                        <metadataId>volatile</metadataId>
+	                    </bind>
+                    </include>
+                    <include>
+	                    <bind>
+	                        <!-- Extension less files -->
+	                        <pattern>%regex[^[^.]+$]</pattern>
+	                        <metadataId>volatile-naked</metadataId>
+	                    </bind>
+                    </include>
                 </includes>
                 <excludes>
                     <exclude>WEB-INF/**</exclude>
                 </excludes>
+                <metadatas>
+                    <metadata>
+                        <id>static</id>
+                        <cacheControl>public, max-age=31536000</cacheControl>
+                        <secondsToExpire>31536000</secondsToExpire>
+                        <contentEncoding>gzip</contentEncoding>
+                        <cannedAcl>PublicRead</cannedAcl>
+                    </metadata>
+                    <metadata>
+                        <id>static-longlived</id>
+                        <cacheControl>public, max-age=315360000</cacheControl>
+                        <secondsToExpire>315360000</secondsToExpire>
+                        <contentEncoding>gzip</contentEncoding>
+                        <cannedAcl>PublicRead</cannedAcl>
+                    </metadata>
+                    <metadata>
+                        <id>volatile</id>
+                        <cacheControl>private, max-age=86400</cacheControl>
+                        <secondsToExpire>86400</secondsToExpire>
+                        <contentEncoding>gzip</contentEncoding>
+                        <cannedAcl>PublicRead</cannedAcl>
+                    </metadata>
+                    <metadata>
+                        <id>volatile-naked</id>
+                        <cacheControl>private, max-age=86400</cacheControl>
+                        <secondsToExpire>86400</secondsToExpire>
+                        <contentEncoding>gzip</contentEncoding>
+                        <contentType>text/html</contentType>
+                        <cannedAcl>PublicRead</cannedAcl>
+                    </metadata>
+                </metadatas>
             </configuration>
             <executions>
                 <execution>
