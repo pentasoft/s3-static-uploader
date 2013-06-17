@@ -22,10 +22,10 @@
 		<maven.plugin.tools.api.version>3.2</maven.plugin.tools.api.version>
 		<maven.core.version>3.0.4</maven.core.version>
 		<maven.plugin.api.version>3.0.5</maven.plugin.api.version>
-		
 		<plexus.utils.version>3.0.1</plexus.utils.version>
 		<commons.codec.version>1.6</commons.codec.version>
 		<aws.sdk.version>1.4.6</aws.sdk.version>
+		<junit.version>4.10</junit.version>
 
 		<!-- Plugin versions -->
 		<maven.compiler.plugin.version>2.5.1</maven.compiler.plugin.version>
@@ -60,6 +60,13 @@
 				<version>${aws.sdk.version}</version>
 				<scope>required</scope>
 			</dependency>
+	        <!-- Testing -->
+	        <dependency>
+	            <groupId>junit</groupId>
+	            <artifactId>junit</artifactId>
+	            <version>${junit.version}</version>
+	            <scope>test</scope>
+            </dependency>       
 		</dependencies>
 	</dependencyManagement>
 	
