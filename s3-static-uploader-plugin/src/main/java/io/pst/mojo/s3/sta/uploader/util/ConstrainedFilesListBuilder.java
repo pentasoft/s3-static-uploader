@@ -3,6 +3,7 @@ package io.pst.mojo.s3.sta.uploader.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.pst.mojo.s3.sta.uploader.config.Bind;
@@ -17,9 +18,9 @@ public class ConstrainedFilesListBuilder extends AbstractFilesListBuilder {
     }
     
     public List<ManagedFile> build(Include include) throws IOException {
-        ArrayList<ManagedFile> managedFiles;
+        List<ManagedFile> managedFiles;
         if (include.getContraints() == null) {
-            managedFiles = new ArrayList<ManagedFile>();
+            managedFiles = Collections.emptyList();
         }
         else {
             for (Bind constraint : include.getContraints()) {
