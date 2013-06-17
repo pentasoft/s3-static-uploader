@@ -109,7 +109,6 @@ public class S3Uploader {
     }
     
     private File encodeManagedFile(ManagedFile managedFile) throws Exception {
-        
         File encodedFile = null;
         for (ManagedFileContentEncoder contentEncoder : contentEncoders) {
             if (contentEncoder.isContentEncodingSupported(managedFile.getMetadata().getContentEncoding())) {
