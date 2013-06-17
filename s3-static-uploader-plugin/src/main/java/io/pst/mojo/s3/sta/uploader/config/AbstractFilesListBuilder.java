@@ -1,4 +1,4 @@
-package io.pst.mojo.s3.sta.uploader.util;
+package io.pst.mojo.s3.sta.uploader.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,9 +9,6 @@ import java.util.Map;
 
 import org.codehaus.plexus.util.FileUtils;
 
-import io.pst.mojo.s3.sta.uploader.config.Bind;
-import io.pst.mojo.s3.sta.uploader.config.ManagedFile;
-import io.pst.mojo.s3.sta.uploader.config.Metadata;
 
 public abstract class AbstractFilesListBuilder {
 

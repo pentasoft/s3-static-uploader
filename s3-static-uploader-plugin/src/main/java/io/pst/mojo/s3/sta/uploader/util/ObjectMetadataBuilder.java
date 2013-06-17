@@ -25,16 +25,8 @@ public class ObjectMetadataBuilder {
     }
     
     public ObjectMetadata buildMetadata() {
-        return internalBuildMetadata(new Date(encodedFile.lastModified()));
-    }
-    
-    public ObjectMetadata buildMetadataForRefresh() {
-        return internalBuildMetadata(new Date());
-    }
-    
-    private ObjectMetadata internalBuildMetadata(Date date) {
         assignContentLength();
-        assignLastModified(date);
+        assignLastModified();
         assignContentEncoding();
         assignContentType();
         assignCacheControl();
@@ -50,8 +42,8 @@ public class ObjectMetadataBuilder {
         objectMetadata.setContentLength(encodedFile.length());
     }
     
-    private void assignLastModified(Date date) {
-        objectMetadata.setLastModified(date);
+    private void assignLastModified() {
+        objectMetadata.setLastModified(new Date(encodedFile.lastModified()));
     }
     
     private void assignContentEncoding() {

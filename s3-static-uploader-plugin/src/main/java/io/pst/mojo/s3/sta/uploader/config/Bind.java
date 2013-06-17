@@ -9,7 +9,7 @@ public class Bind {
      * @parameter
      * @required
      */
-    private String pattern;
+    String pattern;
     
     /**
      * The id of the metadata which will be applied to all the 
@@ -17,15 +17,37 @@ public class Bind {
      * @parameter
      * @required
      */
-    private String metadataId;
+    String metadataId;
 
     public String getPattern() {
         return pattern;
     }
-
+    
     public String getMetadataId() {
         return metadataId;
     }
+
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        int result = 1;
+        result = prime * result + ((pattern == null) ? 0 : pattern.hashCode());
+        result = prime * result + ((metadataId == null) ? 0 : metadataId.hashCode());
+        return result;        
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Bind)) {
+            return false;
+        }
+        Bind bind = (Bind) o;
+        return (pattern == null ? bind.pattern == null : pattern.equals(bind.pattern))
+            && (metadataId == null ? bind.metadataId == null : metadataId.equals(bind.metadataId));
+    }    
     
     @Override
     public String toString() {

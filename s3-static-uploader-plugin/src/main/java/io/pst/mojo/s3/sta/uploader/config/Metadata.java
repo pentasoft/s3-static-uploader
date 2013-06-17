@@ -7,19 +7,19 @@ public class Metadata {
      * @parameter
      * @required
      */
-    private String id;
+    String id;
     
     /**
      * Cache control directive. The format must be compliant
      * with Cache-Control HTTP header.
      * @parameter
      */
-    private String cacheControl;
+    String cacheControl;
 
     /**
      * @parameter
      */
-    private String contentDisposition;
+    String contentDisposition;
 
     /**
      * Content type value. Should be used for those cases
@@ -27,31 +27,31 @@ public class Metadata {
      * extension.
      * @parameter
      */
-    private String contentType;
+    String contentType;
     
     /**
      * @parameter
      */
-    private String contentLanguage;
+    String contentLanguage;
 
     /**
      * Number of seconds to add to time when the file is
      * uploaded to S3 for setting Expires metadata.
      * @parameter default-value=0
      */
-    private int secondsToExpire;
+    int secondsToExpire;
     
     /**
      * Content encoding. Only plain and gzip are supported
      * currentlt.
      * @parameter default-value="plain"
      */
-    private String contentEncoding;
+    String contentEncoding;
 
     /**
      * @parameter
      */
-    private String websiteRedirectLocation;
+    String websiteRedirectLocation;
 
     /**
      * The S3 permission to apply to uploaded files. Could be
@@ -60,14 +60,14 @@ public class Metadata {
      * @parameter
      * @required
      */
-    private String cannedAcl;
+    String cannedAcl;
     
     /**
      * Set if this is the default metadata which will be applied
      * to all Binds which don't specify a metadata id.
      * @parameter property="default" default-value=false
      */
-    private boolean def;
+    boolean def;
 
     public String getId() {
         return id;
@@ -76,21 +76,27 @@ public class Metadata {
     public String getCacheControl() {
         return toLowerCase(cacheControl);
     }
+    
     public String getContentDisposition() {
         return toLowerCase(contentDisposition);
     }
+    
     public String getContentType() {
         return toLowerCase(contentType);
     }
+    
     public String getContentLanguage() {
         return toLowerCase(contentLanguage);
     }
+    
     public int getSecondsToExpire() {
         return secondsToExpire;
     }
+    
     public String getContentEncoding() {
         return toLowerCase(contentEncoding);
     }
+    
     public String getWebsiteRedirectLocation() {
         return toLowerCase(websiteRedirectLocation);
     }
@@ -102,6 +108,35 @@ public class Metadata {
     public boolean isDefault() {
         return def;
     }
+    
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;        
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Metadata)) {
+            return false;
+        }
+        Metadata metadata = (Metadata) o;
+        return (id == null ? metadata.id == null : id.equals(metadata.id))
+            && (cacheControl == null ? metadata.cacheControl == null : cacheControl.equals(metadata.cacheControl))
+            && (contentDisposition == null ? metadata.contentDisposition == null : contentDisposition.equals(metadata.contentDisposition))
+            && (contentType == null ? metadata.contentType == null : contentType.equals(metadata.contentType))
+            && (contentLanguage == null ? metadata.contentLanguage == null : contentLanguage.equals(metadata.contentLanguage))
+            && (secondsToExpire == metadata.secondsToExpire)
+            && (contentEncoding == null ? metadata.contentEncoding == null : contentEncoding.equals(metadata.contentEncoding))
+            && (websiteRedirectLocation == null ? metadata.websiteRedirectLocation == null : websiteRedirectLocation.equals(metadata.websiteRedirectLocation))
+            && (cannedAcl == null ? metadata.cannedAcl == null : cannedAcl.equals(metadata.cannedAcl))
+            && (def == metadata.def);
+    }    
     
     @Override
     public String toString() {

@@ -8,10 +8,10 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
 import io.pst.mojo.s3.sta.uploader.config.Include;
+import io.pst.mojo.s3.sta.uploader.config.IncludedFilesListBuilder;
 import io.pst.mojo.s3.sta.uploader.config.ManagedFile;
 import io.pst.mojo.s3.sta.uploader.config.Metadata;
 import io.pst.mojo.s3.sta.uploader.config.ParametersValidator;
-import io.pst.mojo.s3.sta.uploader.util.IncludedFilesListBuilder;
 import io.pst.mojo.s3.sta.uploader.util.S3Uploader;
 
 /**

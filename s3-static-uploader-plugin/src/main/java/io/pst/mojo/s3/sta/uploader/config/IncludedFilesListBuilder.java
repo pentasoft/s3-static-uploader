@@ -1,13 +1,10 @@
-package io.pst.mojo.s3.sta.uploader.util;
+package io.pst.mojo.s3.sta.uploader.config;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.pst.mojo.s3.sta.uploader.config.Include;
-import io.pst.mojo.s3.sta.uploader.config.ManagedFile;
-import io.pst.mojo.s3.sta.uploader.config.Metadata;
 
 public class IncludedFilesListBuilder extends AbstractFilesListBuilder {
 

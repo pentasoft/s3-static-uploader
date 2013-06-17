@@ -22,10 +22,32 @@ public class Include {
     public Bind getBind() {
         return bind;
     }
-
+    
     public List<Bind> getContraints() {
         return constraints;
     }
+    
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        int result = 1;
+        result = prime * result + ((bind == null) ? 0 : bind.hashCode());
+        result = prime * result + ((constraints == null) ? 0 : constraints.hashCode());
+        return result;        
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Include)) {
+            return false;
+        }
+        Include include = (Include) o;
+        return (bind == null ? include.bind == null : bind.equals(include.bind))
+            && (constraints == null ? include.constraints == null : constraints.equals(include.constraints));
+    }      
     
     @Override
     public String toString() {
