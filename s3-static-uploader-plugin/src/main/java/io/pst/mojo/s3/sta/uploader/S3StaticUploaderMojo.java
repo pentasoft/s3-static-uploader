@@ -2,16 +2,23 @@ package io.pst.mojo.s3.sta.uploader;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3Client;
 
 import io.pst.mojo.s3.sta.uploader.config.Include;
 import io.pst.mojo.s3.sta.uploader.config.IncludedFilesListBuilder;
 import io.pst.mojo.s3.sta.uploader.config.ManagedFile;
 import io.pst.mojo.s3.sta.uploader.config.Metadata;
 import io.pst.mojo.s3.sta.uploader.config.ParametersValidator;
+import io.pst.mojo.s3.sta.uploader.util.ManagedFileContentEncoder;
+import io.pst.mojo.s3.sta.uploader.util.ManagedFileContentEncoderGZipImpl;
+import io.pst.mojo.s3.sta.uploader.util.ManagedFileContentEncoderPlainImpl;
 import io.pst.mojo.s3.sta.uploader.util.S3Uploader;
 
 /**
@@ -107,8 +114,10 @@ public class S3StaticUploaderMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         logParameters();
         validateParameters();
-        uploader = new S3Uploader(accessKey, secretKey, bucketName, inputDirectory, tmpDirectory, refreshExpiredObjects);
-        uploader.setLog(getLog());
+
+        uploader = new S3Uploader(new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey)), 
+                                    getLog(), buildContentEncodersList(), bucketName, inputDirectory, tmpDirectory, 
+                                    refreshExpiredObjects);
         List<ManagedFile> managedFiles = getManagedFiles();
         processManagedFiles(managedFiles); 
     }
@@ -159,5 +168,12 @@ public class S3StaticUploaderMojo extends AbstractMojo {
         }
         getLog().info("finnish processing file " + managedFile.getFilename());
         getLog().info("");
+    }
+    
+    private List<ManagedFileContentEncoder> buildContentEncodersList() {
+        List<ManagedFileContentEncoder> contentEncoders = new ArrayList<ManagedFileContentEncoder>();
+        contentEncoders.add(new ManagedFileContentEncoderGZipImpl(tmpDirectory));
+        contentEncoders.add(new ManagedFileContentEncoderPlainImpl());
+        return contentEncoders;
     }
 }

@@ -3,7 +3,6 @@ package io.pst.mojo.s3.sta.uploader.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -14,7 +13,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.maven.plugin.logging.Log;
 
 import com.amazonaws.AmazonServiceException;
-import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.CopyObjectRequest;
@@ -24,31 +22,25 @@ import io.pst.mojo.s3.sta.uploader.config.ManagedFile;
 
 public class S3Uploader {
 
+    private final AmazonS3Client client;
+    private final Log log;
     private final String bucketName;
     private final File inputDirectory;
-    private final AmazonS3Client client;
     private final List<ManagedFileContentEncoder> contentEncoders;
     private final boolean refreshExpiredObjects;
     private final SimpleDateFormat httpDateFormat;
     
-    private Log log;
-    
-    public S3Uploader(String accessKey, String secretKey, String bucketName, File inputDirectory, File tmpDirectory, boolean refreshExpiredObjects) {
+    public S3Uploader(AmazonS3Client client, Log log, List<ManagedFileContentEncoder> contentEncoders, String bucketName, File inputDirectory, File tmpDirectory, boolean refreshExpiredObjects) {
+        this.client = client;
+        this.log = log;
         this.bucketName = bucketName;
         this.inputDirectory = inputDirectory;
-        this.client = new AmazonS3Client(new BasicAWSCredentials(accessKey,secretKey));
-        this.contentEncoders = new ArrayList<ManagedFileContentEncoder>();
-        this.contentEncoders.add(new ManagedFileContentEncoderGZipImpl(tmpDirectory));
-        this.contentEncoders.add(new ManagedFileContentEncoderPlainImpl());
+        this.contentEncoders = contentEncoders;
         this.refreshExpiredObjects = refreshExpiredObjects;
         this.httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
         this.httpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
-    
-    public void setLog(Log log) {
-        this.log = log;
-    }
-    
+
     public void uploadManagedFile(ManagedFile managedFile) throws Exception {
         File encodedFile = encodeManagedFile(managedFile);
         String remoteFileName = getRemoteFileName(managedFile);
@@ -134,7 +126,8 @@ public class S3Uploader {
         log.info( "  CacheControl: " + objectMetadata.getCacheControl());
         log.info( "  ContentEncoding: " + objectMetadata.getContentEncoding());
         log.info( "  ContentLength: " + objectMetadata.getContentLength());
-        log.info( "  Expires: " + httpDateFormat.format(objectMetadata.getHttpExpiresDate()));
+        log.info( "  Expires: " + (objectMetadata.getHttpExpiresDate() == null ? "unknown" : 
+                                    httpDateFormat.format(objectMetadata.getHttpExpiresDate())));
         log.info( "  LastModified: " + objectMetadata.getLastModified());        
     }
     
