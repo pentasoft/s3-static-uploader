@@ -3,14 +3,32 @@
 	<groupId>io.pst.mojo</groupId>
 	<artifactId>s3-static-uploader</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>S3 Static Uploader</name>
-	<url>http://aws.amazon.com</url>
+	<url>https://github.com/pentasoft/s3-static-uploader</url>
 	<organization>
 		<name>Pentasoft</name>
-		<url>https://github.com/pentasoft/s3-static-uploader</url>
+		<url>https://github.com/pentasoft</url>
 	</organization>
 	<inceptionYear>2013</inceptionYear>
+	
+	<developers>
+        <developer>
+            <id>juancarlos.gonzalez</id>
+            <name>Juan Carlos González</name>
+            <email>juancarlos.gonzalez@pentasoft.es</email>
+            <organization>Pentasoft</organization>
+            <organizationUrl>http://www.pentasoft.es</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>lead developer</role>
+            </roles>
+            <timezone>+1</timezone>
+            <properties>
+                <picUrl></picUrl>
+            </properties>
+        </developer>
+    </developers>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,6 +49,8 @@
 		<!-- Plugin versions -->
 		<maven.compiler.plugin.version>2.5.1</maven.compiler.plugin.version>
 		<maven.plugin.plugin.version>3.2</maven.plugin.plugin.version>
+		<maven.deploy.plugin.version>2.7</maven.deploy.plugin.version>
+		<maven.s3.static.uploader.plugin.version>${project.version}</maven.s3.static.uploader.plugin.version>
 	</properties>
 
     <dependencyManagement>
@@ -94,14 +114,27 @@
 	                    <target>${maven.compiler.target}</target>
 	                </configuration>
 	            </plugin>
+		        <plugin>
+		            <groupId>org.apache.maven.plugins</groupId>
+		            <artifactId>maven-plugin-plugin</artifactId>
+		            <version>${maven.plugin.plugin.version}</version>
+		            <configuration>
+		                <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
+		                <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+		            </configuration>
+                </plugin>
+		        <plugin>
+		            <groupId>org.apache.maven.plugins</groupId>
+		            <artifactId>maven-deploy-plugin</artifactId>
+                	<version>${maven.deploy.plugin.version}</version>
+               	</plugin>
+		        <plugin>
+		            <groupId>io.pst.mojo</groupId>
+		            <artifactId>s3-static-uploader-plugin</artifactId>
+		            <version>${maven.s3.static.uploader.plugin.version}</version>
+   	            </plugin>
 	        </plugins>
 	   </pluginManagement>
-       <plugins>
-           <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-           </plugin>
-        </plugins>     	   
 	</build>
 	
 	<scm>
