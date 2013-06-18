@@ -12,16 +12,14 @@ should be uploaded without any transformation in there names or layout structure
 The plugin will replicate the directory structure in S3, prefixing file names with directories above
 it, starting in the configured input directory.
 
-The plugin will add the following HTTP headers to the uploaded resources:
+You may configure the metadata which will be generated for each file when uploaded to S3.
 
-- Content-Type: the plugin will guess the resource MIME type according to file extension.
-- Cache-Control: public, s-maxage=315360000, max-age=315360000.
-- Expires: 10 years after upload date.
-- Content-Encoding: plain or gzip depending on contentEncoding plugin parameter.
+Also, you may configure the ACL which will set the permissions for each file. Note that this
+is a restricted value mirroring the values provided by AWS in the enum CannedAccessControlList.
 
-The plugin will add the following ACL to the uploaded resources:
-
-- PublicRead: Everyone open/download.
+Finally, the parameter refreshExpiredObjects determines if unchanged objects with past 
+expiration dates should be refreshed (metadata, mainly expiration date) for better
+cache handling of those resources.
  
 ## Installation
 Download the source code and run `mvn install` to add the plugin to your local repository.
@@ -37,52 +35,87 @@ Add the following lines to your pom.xml.
     
 Add the plugin to the build section of your pom.xml:
 
-    <plugin>
-        <groupId>io.pst.mojo</groupId>
-        <artifactId>s3-static-uploader-plugin</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <configuration>
-            <accessKey>${aws.accessKey}</accessKey>
-            <secretKey>${aws.secretKey}</secretKey>
-            <bucketName>${aws.bucketName}</bucketName>
-            <contentEncoding>plain</contentEncoding>
-            <includes>
-                <include>**/*.gif</include>
-                <include>**/*.jpg</include>
-                <include>**/*.tif</include>
-                <include>**/*.png</include>
-                <include>**/*.pdf</include>
-                <include>**/*.swf</include>
-                <include>**/*.eps</include>
-                <include>**/*.js</include>
-                <include>**/*.css</include>
-            </includes>
-            <excludes>
-                <exclude>WEB-INF/**</exclude>
-            </excludes>
-        </configuration>
-        <executions>
-            <execution>
-                <goals>
-                    <goal>upload</goal>
-                </goals>
-                <phase>prepare-package</phase>
-            </execution>
-        </executions>
-    </plugin>
-
-## Configuration parameters
-
-- accessKey: AWS access key.
-- secretKey: AWS secret key.
-- bucketName: AWS S3 bucket name.
-- includes: list of regular expressions matching files to include. 
-- excludes: list of regular expressions matching files to exclude.
-- outputDirectory: the directory where the webapp is built. Default value is: default-value="${project.build.directory}/${project.build.finalName}.
-- inputDirectory: the directorry containing the files to be processed: Default value is: ${basedir}/src/main/webapp.
-- tmpDirectory: the directory used for encoding files before uploading. Default value is: ${project.build.directory}/temp.
-- contentEncoding: content encoding type. Could be plain or gzip. Default value is: gzip.
-- extensionLessMimeType: MIME type for extension less files. Default value is text/html.
+        <plugin>
+            <groupId>io.pst.mojo</groupId>
+            <artifactId>s3-static-uploader-plugin</artifactId>
+            <configuration>
+                <accessKey>${aws.accessKey}</accessKey>
+                <secretKey>${aws.secretKey}</secretKey>
+                <bucketName>${aws.bucketName}</bucketName>
+                <refreshExpiredObjects>true</refreshExpiredObjects>
+                <includes>
+                    <include>
+                        <bind>
+                            <!-- Could be path expressions or reg. expressions -->
+                            <pattern>%regex[([^\s]+(\.(?i)(jpg|png|gif|bmp|tif|pdf|swf|eps))$)]</pattern>
+                            <metadataId>static</metadataId>
+                        </bind>
+                        <constraints>
+                            <!-- Constraint for specific files -->
+                            <bind>
+                                <pattern>**/next*.png</pattern>
+                                <metadataId>static-longlived</metadataId>
+                            </bind>
+                        </constraints>
+                    </include>
+                    <include>
+                        <bind>
+                            <pattern>%regex[([^\s]+(\.(?i)(html|css|js))$)]</pattern>
+                            <metadataId>volatile</metadataId>
+                        </bind>
+                    </include>
+                    <include>
+                        <bind>
+                            <!-- Extension less files -->
+                            <pattern>%regex[^[^.]+$]</pattern>
+                            <metadataId>volatile-naked</metadataId>
+                        </bind>
+                    </include>
+                </includes>
+                <excludes>
+                    <exclude>WEB-INF/**</exclude>
+                </excludes>
+                <metadatas>
+                    <metadata>
+                        <id>static</id>
+                        <cacheControl>public, max-age=31536000</cacheControl>
+                        <secondsToExpire>31536000</secondsToExpire>
+                        <contentEncoding>gzip</contentEncoding>
+                        <cannedAcl>PublicRead</cannedAcl>
+                    </metadata>
+                    <metadata>
+                        <id>static-longlived</id>
+                        <cacheControl>public, max-age=315360000</cacheControl>
+                        <secondsToExpire>315360000</secondsToExpire>
+                        <contentEncoding>gzip</contentEncoding>
+                        <cannedAcl>PublicRead</cannedAcl>
+                    </metadata>
+                    <metadata>
+                        <id>volatile</id>
+                        <cacheControl>private, max-age=86400</cacheControl>
+                        <secondsToExpire>86400</secondsToExpire>
+                        <contentEncoding>gzip</contentEncoding>
+                        <cannedAcl>PublicRead</cannedAcl>
+                    </metadata>
+                    <metadata>
+                        <id>volatile-naked</id>
+                        <cacheControl>private, max-age=86400</cacheControl>
+                        <secondsToExpire>86400</secondsToExpire>
+                        <contentEncoding>gzip</contentEncoding>
+                        <contentType>text/html</contentType>
+                        <cannedAcl>PublicRead</cannedAcl>
+                    </metadata>
+                </metadatas>
+            </configuration>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>upload</goal>
+                    </goals>
+                    <phase>prepare-package</phase>
+                </execution>
+            </executions>
+        </plugin>
 
 ## Usage
 To upload your files to AWS S3 after completing setup there are two options:
@@ -105,7 +138,4 @@ install. You can configure maven-war-plugin to ignore this error:
             <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
     </plugin>   
-
-   
-
     
