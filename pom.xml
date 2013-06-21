@@ -25,7 +25,7 @@
             </roles>
             <timezone>+1</timezone>
             <properties>
-                <picUrl></picUrl>
+                <picUrl />
             </properties>
         </developer>
     </developers>
@@ -50,7 +50,9 @@
 		<maven.compiler.plugin.version>2.5.1</maven.compiler.plugin.version>
 		<maven.plugin.plugin.version>3.2</maven.plugin.plugin.version>
 		<maven.deploy.plugin.version>2.7</maven.deploy.plugin.version>
-		<maven.s3.static.uploader.plugin.version>${project.version}</maven.s3.static.uploader.plugin.version>
+		<maven.release.plugin.version>2.4.1</maven.release.plugin.version>
+		<maven.gpg.plugin.version>1.4</maven.gpg.plugin.version>
+		<maven.s3.static.uploader.plugin.version>0.0.2</maven.s3.static.uploader.plugin.version>
 	</properties>
 
     <dependencyManagement>
@@ -123,10 +125,23 @@
 		                <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
 		            </configuration>
                 </plugin>
+				<plugin>
+				    <groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-release-plugin</artifactId>
+				    <version>${maven.release.plugin.version}</version>
+				    <configuration>
+				        <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+				    </configuration>
+				</plugin>                
 		        <plugin>
 		            <groupId>org.apache.maven.plugins</groupId>
 		            <artifactId>maven-deploy-plugin</artifactId>
                 	<version>${maven.deploy.plugin.version}</version>
+               	</plugin>
+              	<plugin>    
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${maven.gpg.plugin.version}</version>
                	</plugin>
 		        <plugin>
 		            <groupId>io.pst.mojo</groupId>
@@ -135,25 +150,63 @@
    	            </plugin>
 	        </plugins>
 	   </pluginManagement>
+	   <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+       	    </plugin>
+	   </plugins>
 	</build>
 	
 	<scm>
 	   <connection>scm:git:https://github.com/pentasoft/s3-static-uploader.git</connection>
 	   <developerConnection>scm:git:https://github.com/pentasoft/s3-static-uploader.git</developerConnection>
 	   <url>https://github.com/pentasoft/s3-static-uploader</url>
-	</scm>
+	  <tag>s3-static-uploader-0.0.2</tag>
+  </scm>
 
     <distributionManagement>
-        <repository>
-            <id>nexusmirror</id>
-            <name>Pentasoft Releases Repository</name>
-            <url>http://repository.pentasoft-development.es:8081/nexus/content/repositories/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexusmirror</id>
-            <name>Pentasoft Snapshots Repository</name>
-            <url>http://repository.pentasoft-development.es:8081/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
+	    <snapshotRepository>
+	        <id>sonatype-nexus-snapshots</id>
+	        <name>Sonatype Nexus snapshot repository</name>
+	        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+	    </snapshotRepository>
+	    <repository>
+	        <id>sonatype-nexus-staging</id>
+	        <name>Sonatype Nexus release repository</name>
+	        <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+	    </repository>
     </distributionManagement>
-	
+    
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <configuration>
+                            <passphrase>${gpg.passphrase}</passphrase>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>        
 </project>
