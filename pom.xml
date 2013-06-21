@@ -50,7 +50,7 @@
 		<maven.compiler.plugin.version>2.5.1</maven.compiler.plugin.version>
 		<maven.plugin.plugin.version>3.2</maven.plugin.plugin.version>
 		<maven.deploy.plugin.version>2.7</maven.deploy.plugin.version>
-		<maven.release.plugin.version>2.4.1</maven.release.plugin.version>
+		<maven.release.plugin.version>2.2.2</maven.release.plugin.version>
 		<maven.gpg.plugin.version>1.4</maven.gpg.plugin.version>
 		<maven.s3.static.uploader.plugin.version>1.0</maven.s3.static.uploader.plugin.version>
 	</properties>
