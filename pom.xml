@@ -131,6 +131,8 @@
 				    <version>${maven.release.plugin.version}</version>
 				    <configuration>
 				        <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+                        <!-- see http://jira.codehaus.org/browse/MGPG-9 -->
+                        <mavenExecutorId>forked-path</mavenExecutorId>
 				    </configuration>
 				</plugin>                
 		        <plugin>
