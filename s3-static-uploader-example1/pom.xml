@@ -3,7 +3,7 @@
   <parent>
     <groupId>io.pst.mojo</groupId>
     <artifactId>s3-static-uploader</artifactId>
-    <version>1.0</version>
+    <version>0.0.2-SNAPSHOT</version>
   </parent>
   <artifactId>s3-static-uploader-example1</artifactId>
   <packaging>war</packaging>
