@@ -18,6 +18,9 @@ public class ObjectMetadataBuilder {
     private final File encodedFile;
     private final ObjectMetadata objectMetadata;
     
+    private Calendar calendar;
+    private Date expiresReference;
+    
     public ObjectMetadataBuilder(ManagedFile managedFile, File encodedFile) {
         this.managedFile = managedFile;
         this.encodedFile = encodedFile;
@@ -25,6 +28,7 @@ public class ObjectMetadataBuilder {
     }
     
     public ObjectMetadata buildMetadata() {
+        initializeCalendar();
         assignContentLength();
         assignLastModified();
         assignContentEncoding();
@@ -36,6 +40,15 @@ public class ObjectMetadataBuilder {
         assignWebsiteRedirectLocation();
         
         return objectMetadata;
+    }
+    
+    Date getExpiresReference() {
+        return expiresReference;
+    }
+    
+    private void initializeCalendar() {
+        calendar = Calendar.getInstance();
+        expiresReference = calendar.getTime();
     }
     
     private void assignContentLength() {

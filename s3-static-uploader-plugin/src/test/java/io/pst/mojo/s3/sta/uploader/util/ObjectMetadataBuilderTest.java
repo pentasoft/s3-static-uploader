@@ -49,7 +49,8 @@ public class ObjectMetadataBuilderTest {
         assertThat(builtObjectMetadata.getContentEncoding(), is("gzip"));
         assertThat(builtObjectMetadata.getContentType(), is("image/jpeg"));
         assertThat(builtObjectMetadata.getCacheControl(), is("public, max-age=31536000"));
-        assertThat(builtObjectMetadata.getHttpExpiresDate(), is(calendar.getTime()));
+        assertThat(builtObjectMetadata.getHttpExpiresDate(), is(addSecondsToDate(builder.getExpiresReference(),
+                                                                managedFile.getMetadata().getSecondsToExpire())));
     }
     
     @Test
@@ -64,5 +65,12 @@ public class ObjectMetadataBuilderTest {
         ObjectMetadata builtObjectMetadata = builder.buildMetadata();
         
         assertThat(builtObjectMetadata.getContentType(), is("text/html"));
+    }
+    
+    private Date addSecondsToDate(Date reference, int seconds) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(reference);
+        calendar.add(Calendar.SECOND, seconds);
+        return calendar.getTime();
     }
 }
