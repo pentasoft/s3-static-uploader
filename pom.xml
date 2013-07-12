@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.pst.mojo</groupId>
 	<artifactId>s3-static-uploader</artifactId>
@@ -11,31 +12,31 @@
 		<url>https://github.com/pentasoft</url>
 	</organization>
 	<inceptionYear>2013</inceptionYear>
-	
+
 	<developers>
-        <developer>
-            <id>juancarlos.gonzalez</id>
-            <name>Juan Carlos González</name>
-            <email>juancarlos.gonzalez@pentasoft.es</email>
-            <organization>Pentasoft</organization>
-            <organizationUrl>http://www.pentasoft.es</organizationUrl>
-            <roles>
-                <role>architect</role>
-                <role>lead developer</role>
-            </roles>
-            <timezone>+1</timezone>
-            <properties>
-                <picUrl />
-            </properties>
-        </developer>
-    </developers>
+		<developer>
+			<id>juancarlos.gonzalez</id>
+			<name>Juan Carlos González</name>
+			<email>juancarlos.gonzalez@pentasoft.es</email>
+			<organization>Pentasoft</organization>
+			<organizationUrl>http://www.pentasoft.es</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>lead developer</role>
+			</roles>
+			<timezone>+1</timezone>
+			<properties>
+				<picUrl />
+			</properties>
+		</developer>
+	</developers>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-	    <maven.compiler.source>1.7</maven.compiler.source>
-	    <maven.compiler.target>1.7</maven.compiler.target>
-		
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+
 		<!-- Library versions -->
 		<maven.plugin.tools.api.version>3.2</maven.plugin.tools.api.version>
 		<maven.core.version>3.0.4</maven.core.version>
@@ -55,13 +56,13 @@
 		<maven.s3.static.uploader.plugin.version>1.0</maven.s3.static.uploader.plugin.version>
 	</properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.apache.maven</groupId>
-                <artifactId>maven-plugin-api</artifactId>
-                <version>${maven.plugin.api.version}</version>
-            </dependency>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-plugin-api</artifactId>
+				<version>${maven.plugin.api.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.apache.maven.plugin-tools</groupId>
 				<artifactId>maven-plugin-tools-api</artifactId>
@@ -83,131 +84,131 @@
 				<version>${aws.sdk.version}</version>
 				<scope>required</scope>
 			</dependency>
-	        <!-- Testing -->
-	        <dependency>
-	            <groupId>junit</groupId>
-	            <artifactId>junit</artifactId>
-	            <version>${junit.version}</version>
-	            <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>${mockito.version}</version>
-                <scope>test</scope>
-            </dependency>            
+			<!-- Testing -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>${mockito.version}</version>
+				<scope>test</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<modules>
-	   <module>s3-static-uploader-plugin</module>
-	   <module>s3-static-uploader-example1</module>
+		<module>s3-static-uploader-plugin</module>
+		<module>s3-static-uploader-example1</module>
 	</modules>
 
 	<build>
-	   <pluginManagement>
-	       <plugins>
-	           <plugin>
-	                <groupId>org.apache.maven.plugins</groupId>
-	                <artifactId>maven-compiler-plugin</artifactId>
-	                <version>${maven.compiler.plugin.version}</version>
-	                <configuration>
-	                    <source>${maven.compiler.source}</source>
-	                    <target>${maven.compiler.target}</target>
-	                </configuration>
-	            </plugin>
-		        <plugin>
-		            <groupId>org.apache.maven.plugins</groupId>
-		            <artifactId>maven-plugin-plugin</artifactId>
-		            <version>${maven.plugin.plugin.version}</version>
-		            <configuration>
-		                <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
-		                <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
-		            </configuration>
-                </plugin>
+		<pluginManagement>
+			<plugins>
 				<plugin>
-				    <groupId>org.apache.maven.plugins</groupId>
-				    <artifactId>maven-release-plugin</artifactId>
-				    <version>${maven.release.plugin.version}</version>
-				    <configuration>
-				        <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
-                        <!-- see http://jira.codehaus.org/browse/MGPG-9 -->
-                        <mavenExecutorId>forked-path</mavenExecutorId>
-				    </configuration>
-				</plugin>                
-		        <plugin>
-		            <groupId>org.apache.maven.plugins</groupId>
-		            <artifactId>maven-deploy-plugin</artifactId>
-                	<version>${maven.deploy.plugin.version}</version>
-               	</plugin>
-              	<plugin>    
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>${maven.gpg.plugin.version}</version>
-               	</plugin>
-		        <plugin>
-		            <groupId>io.pst.mojo</groupId>
-		            <artifactId>s3-static-uploader-plugin</artifactId>
-		            <version>${maven.s3.static.uploader.plugin.version}</version>
-   	            </plugin>
-	        </plugins>
-	   </pluginManagement>
-	   <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-       	    </plugin>
-	   </plugins>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.plugin.version}</version>
+					<configuration>
+						<source>${maven.compiler.source}</source>
+						<target>${maven.compiler.target}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>${maven.plugin.plugin.version}</version>
+					<configuration>
+						<!-- see http://jira.codehaus.org/browse/MNG-5346 -->
+						<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>${maven.release.plugin.version}</version>
+					<configuration>
+						<arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+						<!-- see http://jira.codehaus.org/browse/MGPG-9 -->
+						<mavenExecutorId>forked-path</mavenExecutorId>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>${maven.deploy.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>${maven.gpg.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>io.pst.mojo</groupId>
+					<artifactId>s3-static-uploader-plugin</artifactId>
+					<version>${maven.s3.static.uploader.plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+			</plugin>
+		</plugins>
 	</build>
-	
-	<scm>
-	   <connection>scm:git:git@github.com:pentasoft/s3-static-uploader.git</connection>
-	   <developerConnection>scm:git:git@github.com:pentasoft/s3-static-uploader.git</developerConnection>
-	   <url>https://github.com/pentasoft/s3-static-uploader</url>
-    </scm>
 
-    <distributionManagement>
-	    <snapshotRepository>
-	        <id>sonatype-nexus-snapshots</id>
-	        <name>Sonatype Nexus snapshot repository</name>
-	        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-	    </snapshotRepository>
-	    <repository>
-	        <id>sonatype-nexus-staging</id>
-	        <name>Sonatype Nexus release repository</name>
-	        <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-	    </repository>
-    </distributionManagement>
-    
-    <profiles>
-        <profile>
-            <id>release-sign-artifacts</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <configuration>
-                            <passphrase>${gpg.passphrase}</passphrase>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>        
+	<scm>
+		<connection>scm:git:git@github.com:pentasoft/s3-static-uploader.git</connection>
+		<developerConnection>scm:git:git@github.com:pentasoft/s3-static-uploader.git</developerConnection>
+		<url>https://github.com/pentasoft/s3-static-uploader</url>
+	</scm>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus snapshot repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Sonatype Nexus release repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
+	<profiles>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<configuration>
+							<passphrase>${gpg.passphrase}</passphrase>
+						</configuration>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
