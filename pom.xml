@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.pst.mojo</groupId>
 	<artifactId>s3-static-uploader</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>1.1-SNAPSHOT</version>
 	<name>S3 Static Uploader</name>
 	<description>Plugin for uploading static content to AWS S3</description>
 	<url>https://github.com/pentasoft/s3-static-uploader</url>
@@ -26,7 +25,8 @@
         <connection>scm:git:git@github.com:pentasoft/s3-static-uploader.git</connection>
         <developerConnection>scm:git:git@github.com:pentasoft/s3-static-uploader.git</developerConnection>
         <url>https://github.com/pentasoft/s3-static-uploader</url>
-    </scm>
+      <tag>HEAD</tag>
+  </scm>
 
 	<developers>
 		<developer>
@@ -68,7 +68,7 @@
 		<maven.deploy.plugin.version>2.7</maven.deploy.plugin.version>
 		<maven.release.plugin.version>2.4.1</maven.release.plugin.version>
 		<maven.gpg.plugin.version>1.4</maven.gpg.plugin.version>
-		<maven.s3.static.uploader.plugin.version>1.0</maven.s3.static.uploader.plugin.version>
+		<maven.s3.static.uploader.plugin.version>1.1-SNAPSHOT</maven.s3.static.uploader.plugin.version>
 	</properties>
 
 	<dependencyManagement>
