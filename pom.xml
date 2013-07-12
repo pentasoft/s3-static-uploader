@@ -130,9 +130,7 @@
 				    <artifactId>maven-release-plugin</artifactId>
 				    <version>${maven.release.plugin.version}</version>
 				    <configuration>
-				        <!-- 
 				        <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
-				         -->
                         <!-- see http://jira.codehaus.org/browse/MGPG-9 -->
                         <mavenExecutorId>forked-path</mavenExecutorId>
 				    </configuration>
@@ -195,11 +193,9 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <!-- 
                         <configuration>
                             <passphrase>${gpg.passphrase}</passphrase>
                         </configuration>
-                         -->
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
