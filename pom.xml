@@ -161,8 +161,8 @@
 	</build>
 	
 	<scm>
-	   <connection>scm:git:git://github.com/pentasoft/s3-static-uploader.git</connection>
-	   <developerConnection>scm:git:git://github.com/pentasoft/s3-static-uploader.git</developerConnection>
+	   <connection>scm:git:git@github.com:pentasoft/s3-static-uploader.git</connection>
+	   <developerConnection>scm:git:git@github.com:pentasoft/s3-static-uploader.git</developerConnection>
 	   <url>https://github.com/pentasoft/s3-static-uploader</url>
     </scm>
 
