@@ -163,11 +163,10 @@
 	</build>
 	
 	<scm>
-	   <connection>scm:git:https://github.com/pentasoft/s3-static-uploader.git</connection>
-	   <developerConnection>scm:git:https://github.com/pentasoft/s3-static-uploader.git</developerConnection>
+	   <connection>scm:git:git://github.com/pentasoft/s3-static-uploader.git</connection>
+	   <developerConnection>scm:git:git://github.com/pentasoft/s3-static-uploader.git</developerConnection>
 	   <url>https://github.com/pentasoft/s3-static-uploader</url>
-	  <tag>s3-static-uploader-1.0</tag>
-  </scm>
+    </scm>
 
     <distributionManagement>
 	    <snapshotRepository>
