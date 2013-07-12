@@ -12,6 +12,20 @@
 		<url>https://github.com/pentasoft</url>
 	</organization>
 	<inceptionYear>2013</inceptionYear>
+	
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>	
+
+    <scm>
+        <connection>scm:git:git@github.com:pentasoft/s3-static-uploader.git</connection>
+        <developerConnection>scm:git:git@github.com:pentasoft/s3-static-uploader.git</developerConnection>
+        <url>https://github.com/pentasoft/s3-static-uploader</url>
+    </scm>
 
 	<developers>
 		<developer>
@@ -160,12 +174,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<scm>
-		<connection>scm:git:git@github.com:pentasoft/s3-static-uploader.git</connection>
-		<developerConnection>scm:git:git@github.com:pentasoft/s3-static-uploader.git</developerConnection>
-		<url>https://github.com/pentasoft/s3-static-uploader</url>
-	</scm>
 
 	<distributionManagement>
 		<snapshotRepository>
