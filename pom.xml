@@ -6,6 +6,7 @@
 	<packaging>pom</packaging>
 	<version>0.0.2-SNAPSHOT</version>
 	<name>S3 Static Uploader</name>
+	<description>Plugin for uploading static content to AWS S3</description>
 	<url>https://github.com/pentasoft/s3-static-uploader</url>
 	<organization>
 		<name>Pentasoft</name>
