@@ -4,10 +4,10 @@ S3 Static Uploader
 S3 static uploader is a Maven plugin for uploading static content to AWS S3. A Java web application layout
 is not required. 
 
-This plugin is a rewrite of S3 WebCache Maven Plugin (https://github.com/aro1976/aws-parent). Our use
+Our plugin is inspired in S3 WebCache Maven Plugin (https://github.com/aro1976/aws-parent). Our use
 case is different from the one used by their plugin, as we were looking for an automated way to deploy a
 static site to AWS S3 from a maven build. We're not using S3's mini web server, so all of our resources
-should be uploaded without any transformation in there names or layout structure.
+should be uploaded without any transformation in their names or layout structure.
 
 The plugin will replicate the directory structure in S3, prefixing file names with directories above
 it, starting in the configured input directory.
@@ -22,7 +22,9 @@ expiration dates should be refreshed (metadata, mainly expiration date) for bett
 cache handling of those resources.
  
 ## Installation
-Download the source code and run `mvn install` to add the plugin to your local repository.
+Download the source code and run `mvn install` to add the plugin to your local repository. Also, you 
+may reference it from Maven Central as the artifacts have been uploaded there too. Currently, the 
+version available is 1.1.
 
 ## Setup
 Add the following lines to your pom.xml.
