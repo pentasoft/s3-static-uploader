@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static java.util.Objects.nonNull;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.maven.plugin.logging.Log;
@@ -117,7 +118,8 @@ public class S3Uploader {
     }
     
     private boolean isMetadataExpired(ObjectMetadata objectMetadata) {
-        return objectMetadata.getHttpExpiresDate().before(new Date()) ? true : false;
+        return null != objectMetadata.getHttpExpiresDate()
+            || objectMetadata.getHttpExpiresDate().before(new Date());
     }
     
     private void logObjectMetadata(String remoteFileName, ObjectMetadata objectMetadata) {
