@@ -118,8 +118,7 @@ public class S3Uploader {
     }
     
     private boolean isMetadataExpired(ObjectMetadata objectMetadata) {
-        return null != objectMetadata.getHttpExpiresDate()
-            || objectMetadata.getHttpExpiresDate().before(new Date());
+        return true;
     }
     
     private void logObjectMetadata(String remoteFileName, ObjectMetadata objectMetadata) {
